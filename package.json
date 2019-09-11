@@ -1,0 +1,19 @@
+{
+  "name": "humio-winston",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "author": "Vlad Marica",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^12.7.4",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "winston": "^3.2.1",
+    "winston-transport": "^4.3.0"
+  }
+}
