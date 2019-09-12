@@ -1,6 +1,6 @@
 {
   "name": "humio-winston",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Winston transport for sending logs to Humio",
   "main": "dist/humio-winston.js",
   "types": "dist/humio-winston.d.ts",
@@ -10,8 +10,8 @@
   "author": "Vlad Marica",
   "license": "MIT",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/Quintinity/humio-winston.git"
+    "type": "git",
+    "url": "https://github.com/Quintinity/humio-winston.git"
   },
   "devDependencies": {
     "@types/node": "^12.7.4",
