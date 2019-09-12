@@ -10,9 +10,11 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^12.7.4",
+    "@types/node-fetch": "^2.5.0",
     "typescript": "^3.6.3"
   },
   "dependencies": {
+    "node-fetch": "^2.6.0",
     "winston": "^3.2.1",
     "winston-transport": "^4.3.0"
   }
