@@ -1,4 +1,4 @@
-# humio-winston <a href="https://www.npmjs.com/package/humio-winston"><img src="https://img.shields.io/npm/v/humio-winston.svg" alt="" /></a>
+# humio-winston <a href="https://www.npmjs.com/package/humio-winston"><img src="https://img.shields.io/npm/v/humio-winston.svg" alt="" /></a> [![Build Status](https://dev.azure.com/vladmarica/humio-winston/_apis/build/status/humio-winston-tests?branchName=master)](https://dev.azure.com/vladmarica/humio-winston/_build/latest?definitionId=9&branchName=master)
 
 A simple transport for sending logs to [Humio](https://www.humio.com/) using the [Winston](https://github.com/winstonjs/winston) logger.
 
