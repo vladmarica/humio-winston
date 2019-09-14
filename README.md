@@ -15,9 +15,9 @@ import HumioTransport from 'humio-winston';
 const logger = winston.createLogger({
     format: winston.format.simple(),
     transports: [
-        // The only required option is your Humio injest token
+        // The only required option is your Humio ingest token
         new HumioTransport({
-            injestToken: '<YOUR INJEST TOKEN HERE>'
+            ingestToken: '<YOUR INJEST TOKEN HERE>'
         }),
     ],
 });
@@ -29,7 +29,7 @@ You can also apply tags to all logs sent to Humio through the transport. See the
 
 ```javascript
 new HumioTransport({
-    injestToken: '<YOUR  INJEST TOKEN HERE>',
+    ingestToken: '<YOUR INJEST TOKEN HERE>',
     tags: {
         app: 'example',
     },
@@ -45,7 +45,7 @@ const logger = winston.createLogger({
         new winston.transports.Console(),
         new HumioTransport({
             level: 'info', // Only send logs that are 'info' or above to Humio  
-            injestToken: '<YOUR HUMIO INJEST TOKEN HERE>',
+            ingestToken: '<YOUR INJEST TOKEN HERE>',
         }),
     ],
 });

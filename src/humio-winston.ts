@@ -5,7 +5,7 @@ const API_BASE_URL = 'https://cloud.humio.com';
 const UNSTRUCTURE_API_ENDPOINT = '/api/v1/ingest/humio-unstructured';
 
 export interface HumioTransportOptions extends TransportStreamOptions {
-    injestToken: string;
+    ingestToken: string;
     callback?: (err?: Error) => void;
     tags?: { [key: string]: string }
 }
@@ -35,17 +35,17 @@ export default class HumioTransport extends Transport {
         if (this.options.tags) {
             body.tags = this.options.tags;
         }
-        this.sendInjestRequest(UNSTRUCTURE_API_ENDPOINT, [body]);
+        this.sendIngestRequest(UNSTRUCTURE_API_ENDPOINT, [body]);
 
         callback();
     }
 
-    private sendInjestRequest(endpoint: string, requestBody: any) {
+    private sendIngestRequest(endpoint: string, requestBody: any) {
         fetch(API_BASE_URL + endpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.options.injestToken,
+                'Authorization': 'Bearer ' + this.options.ingestToken,
             },
             body: JSON.stringify(requestBody)
         })

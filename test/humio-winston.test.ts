@@ -2,7 +2,7 @@ import winston from 'winston'
 import HumioTransport, { HumioTransportOptions, HumioError } from '../src/humio-winston';
 import waitForExpect from 'wait-for-expect';
 
-const HUMIO_INGEST_TOKEN = process.env.HUMIO_INJEHUMIO_INGEST_TOKENST_TOKEN;
+const HUMIO_INGEST_TOKEN = process.env.HUMIO_INGEST_TOKEN;
 if (!HUMIO_INGEST_TOKEN) {
     console.log('You must set the HUMIO_INGEST_TOKEN environment variable');
     process.exit(1);
@@ -14,7 +14,7 @@ interface CreateLoggerResult {
 }
 
 function createLogger(defaultLevel: string = 'info', options?: Partial<HumioTransportOptions>): CreateLoggerResult {
-    const defaultOptions: HumioTransportOptions = { level: defaultLevel, injestToken: '' };
+    const defaultOptions: HumioTransportOptions = { level: defaultLevel, ingestToken: '' };
     const humioTransport = new HumioTransport(
         options ? Object.assign({}, defaultOptions, options) : defaultOptions);
 
@@ -58,10 +58,10 @@ describe('test transport functionality', () => {
 });
 
 describe('testing sending logs to Humio', () => {
-    it('should succeed given valid injest token', async (done) => {
+    it('should succeed given valid ingest token', async (done) => {
         const callback = jest.fn();
         const logger = createLogger('info', {
-            injestToken: HUMIO_INGEST_TOKEN,
+            ingestToken: HUMIO_INGEST_TOKEN,
             callback: callback
         }).logger;
         logger.info('Test log from humio-winston');
@@ -74,10 +74,10 @@ describe('testing sending logs to Humio', () => {
         done();
     });
 
-    it('should succeed with tags given valid injest token', async (done) => {
+    it('should succeed with tags given valid ingest token', async (done) => {
         const callback = jest.fn();
         const logger = createLogger('info', {
-            injestToken: HUMIO_INGEST_TOKEN,
+            ingestToken: HUMIO_INGEST_TOKEN,
             tags: {
                 app: 'humion-winston-test'
             },
@@ -93,7 +93,7 @@ describe('testing sending logs to Humio', () => {
         done();
     });
 
-    it('should fail given invalid injest token', async (done) => {
+    it('should fail given invalid ingest token', async (done) => {
         const callback = jest.fn();
         const logger = createLogger('info', { callback: callback }).logger;
         logger.info('Test log from humio-winston (should not be sent)');
