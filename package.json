@@ -1,6 +1,6 @@
 {
   "name": "humio-winston",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Winston transport for sending logs to Humio",
   "main": "dist/humio-winston.js",
   "types": "dist/humio-winston.d.ts",
