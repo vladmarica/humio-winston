@@ -1,2 +1,4 @@
 src/
 test/
+jest.config.jest
+tsconfig.json

@@ -2,9 +2,9 @@ import winston from 'winston'
 import HumioTransport, { HumioTransportOptions, HumioError } from '../src/humio-winston';
 import waitForExpect from 'wait-for-expect';
 
-const HUMIO_INJEST_TOKEN = process.env.HUMIO_INJEST_TOKEN;
-if (!HUMIO_INJEST_TOKEN) {
-    console.log('You must set the HUMIO_INJEST_TOKEN environment variable');
+const HUMIO_INGEST_TOKEN = process.env.HUMIO_INJEHUMIO_INGEST_TOKENST_TOKEN;
+if (!HUMIO_INGEST_TOKEN) {
+    console.log('You must set the HUMIO_INGEST_TOKEN environment variable');
     process.exit(1);
 }
 
@@ -61,7 +61,7 @@ describe('testing sending logs to Humio', () => {
     it('should succeed given valid injest token', async (done) => {
         const callback = jest.fn();
         const logger = createLogger('info', {
-            injestToken: HUMIO_INJEST_TOKEN,
+            injestToken: HUMIO_INGEST_TOKEN,
             callback: callback
         }).logger;
         logger.info('Test log from humio-winston');
@@ -77,7 +77,7 @@ describe('testing sending logs to Humio', () => {
     it('should succeed with tags given valid injest token', async (done) => {
         const callback = jest.fn();
         const logger = createLogger('info', {
-            injestToken: HUMIO_INJEST_TOKEN,
+            injestToken: HUMIO_INGEST_TOKEN,
             tags: {
                 app: 'humion-winston-test'
             },

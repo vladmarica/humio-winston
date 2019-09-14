@@ -6,30 +6,22 @@ const UNSTRUCTURE_API_ENDPOINT = '/api/v1/ingest/humio-unstructured';
 
 export interface HumioTransportOptions extends TransportStreamOptions {
     injestToken: string;
-    suppressErrors?: boolean; // If false, all errors are printed to stderr
     callback?: (err?: Error) => void;
     tags?: { [key: string]: string }
 }
 
 export class HumioError extends Error {
-    code: number;
-
-    constructor(message: string, code: number) {
+    constructor(message: string, public code: number) {
         super(message);
-        this.code = code;
     }
 }
-
-const defaultOptions: Partial<HumioTransportOptions> = {
-    suppressErrors: true,
-};
 
 export default class HumioTransport extends Transport {
     private options: HumioTransportOptions;
 
     constructor(options: HumioTransportOptions) {
         super(options);
-        this.options = Object.assign({}, defaultOptions, options);
+        this.options = options;
     }
 
     public log(info: any, callback: () => void): any {
