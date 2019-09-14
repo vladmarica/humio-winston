@@ -27,36 +27,6 @@ function createLogger(defaultLevel: string = 'info', options?: Partial<HumioTran
     };
 }
 
-async function sleep(ms: number): Promise<void> {
-    return new Promise<void>((resolve) => setTimeout(resolve, ms));
-}
-
-describe('test transport functionality', () => {
-    it('should emit once when called with proper level', async (done) => {
-        const result = createLogger()
-        const callback = jest.fn(() => {});
-
-        result.transport.on('logged', callback);
-        result.logger.info('Test log 1');
-
-        await sleep(1000);
-        expect(callback).toBeCalledTimes(1);
-        done();
-    });
-
-    it('should not emit when called with level that\'s too low', async (done) => {
-        const result = createLogger('info', { level: 'warn' })
-        const callback = jest.fn(() => {});
-
-        result.transport.on('logged', callback);
-        result.logger.info('Test log 2');
-
-        await sleep(1000);
-        expect(callback).not.toBeCalled();
-        done();
-    });
-});
-
 describe('testing sending logs to Humio', () => {
     it('should succeed given valid ingest token', async (done) => {
         const callback = jest.fn();
@@ -107,5 +77,4 @@ describe('testing sending logs to Humio', () => {
         expect(error.code).toBe(401);
         done();
     });
-
 });
