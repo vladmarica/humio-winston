@@ -40,31 +40,31 @@ export default class HumioTransport extends Transport {
         callback();
     }
 
-    private sendIngestRequest(endpoint: string, requestBody: any) {
-        fetch(API_BASE_URL + endpoint, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + this.options.ingestToken,
-            },
-            body: JSON.stringify(requestBody)
-        })
-        .then(res => {
+    private async sendIngestRequest(endpoint: string, requestBody: any) {
+        try {
+            const res = await fetch(API_BASE_URL + endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + this.options.ingestToken,
+                },
+                body: JSON.stringify(requestBody)
+            });
+
             if (this.options.callback) {
                 if (res.status >= 400) {
-                    res.text().then(text => {
-                        this.options.callback!(new HumioError(text, res.status));
-                    });
+                    const text = await res.text();
+                    this.options.callback(new HumioError(text, res.status));
                 }
                 else {
                     this.options.callback();
                 }
             }
-        })
-        .catch(err => {
+        }
+        catch (err) {
             if (this.options.callback) {
                 this.options.callback(err);
             }
-        });
+        }
     }
 }
