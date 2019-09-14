@@ -7,7 +7,17 @@ const UNSTRUCTURE_API_ENDPOINT = '/api/v1/ingest/humio-unstructured';
 export interface HumioTransportOptions extends TransportStreamOptions {
     injestToken: string;
     suppressErrors?: boolean; // If false, all errors are printed to stderr
+    callback?: (err?: Error) => void;
     tags?: { [key: string]: string }
+}
+
+export class HumioError extends Error {
+    code: number;
+
+    constructor(message: string, code: number) {
+        super(message);
+        this.code = code;
+    }
 }
 
 const defaultOptions: Partial<HumioTransportOptions> = {
@@ -47,7 +57,22 @@ export default class HumioTransport extends Transport {
             },
             body: JSON.stringify(requestBody)
         })
-        .catch(err => !this.options.suppressErrors
-            && console.error('Failed to send log to Humio: ' + JSON.stringify(err)));
+        .then(res => {
+            if (this.options.callback) {
+                if (res.status >= 400) {
+                    res.text().then(text => {
+                        this.options.callback!(new HumioError(text, res.status));
+                    });
+                }
+                else {
+                    this.options.callback();
+                }
+            }
+        })
+        .catch(err => {
+            if (this.options.callback) {
+                this.options.callback(err);
+            }
+        });
     }
 }
