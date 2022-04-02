@@ -6,6 +6,13 @@ const UNSTRUCTURE_API_ENDPOINT = '/api/v1/ingest/humio-unstructured';
 
 export interface HumioTransportOptions extends TransportStreamOptions {
     ingestToken: string;
+
+    /**
+     * Specify a specific URL for the Humio service.
+     * Default is https://cloud.humio.com. 
+     * For community use https://cloud.community.humio.com.
+     */
+    apiBaseUrl?: string;
     callback?: (err?: Error) => void;
     tags?: { [key: string]: string }
 }
@@ -18,10 +25,12 @@ export class HumioError extends Error {
 
 export default class HumioTransport extends Transport {
     private options: HumioTransportOptions;
+    private readonly apiBaseUrl: string;
 
     constructor(options: HumioTransportOptions) {
         super(options);
         this.options = options;
+        this.apiBaseUrl = options.apiBaseUrl || API_BASE_URL;
     }
 
     public log(info: any, callback: () => void): any {
@@ -42,7 +51,7 @@ export default class HumioTransport extends Transport {
 
     private async sendIngestRequest(endpoint: string, requestBody: any) {
         try {
-            const res = await fetch(API_BASE_URL + endpoint, {
+            const res = await fetch(this.apiBaseUrl + endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

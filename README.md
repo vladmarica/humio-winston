@@ -15,7 +15,8 @@ import HumioTransport from 'humio-winston';
 const logger = winston.createLogger({
     format: winston.format.simple(),
     transports: [
-        // The only required option is your Humio ingest token
+        // The only required option is your Humio ingest token.
+        // apiBaseUrl is optional. Use to override default API base URL of https://cloud.humio.com
         new HumioTransport({
             ingestToken: '<YOUR INGEST TOKEN HERE>'
         }),
@@ -24,6 +25,7 @@ const logger = winston.createLogger({
 
 logger.info('Hello, world!');
 ```
+
 
 ### Tags
 
